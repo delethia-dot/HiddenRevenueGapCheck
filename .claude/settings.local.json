@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(open /Users/delethiajohnson/Desktop/revenue-gap-funnel/site/index.html)",
+      "Bash(git config *)",
+      "Bash(git ls-remote *)",
+      "Bash(git add *)"
+    ]
+  }
+}

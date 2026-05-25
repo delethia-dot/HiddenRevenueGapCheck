@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "landing",
+      "runtimeExecutable": "/usr/bin/ruby",
+      "runtimeArgs": ["-run", "-e", "httpd", "/Users/delethiajohnson/Desktop/revenue-gap-funnel/site", "-p", "4321", "-b", "127.0.0.1"],
+      "port": 4321
+    }
+  ]
+}
