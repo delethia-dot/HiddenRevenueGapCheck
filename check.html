@@ -641,14 +641,20 @@ function voiceFetch(id, text){
   return p;
 }
 
-/* fire all fixed-text requests once, so playback is instant. self-guards. */
+/* fetch the fixed-text audio in series, so we never trip ElevenLabs
+   concurrency limits. each one waits for the previous to finish.
+   the user spends several seconds per question, plenty of time. */
 var voicePrefetched = false;
 var started = false;
 function prefetchVoice(){
   if(voicePrefetched) return;
   voicePrefetched = true;
-  QUESTIONS.forEach(function(Q){ voiceFetch('q_'+Q.id, Q.q); });
-  voiceFetch('gate', GATE_MSG);
+  var queue = QUESTIONS.map(function(Q){ return { id:'q_'+Q.id, text:Q.q }; });
+  queue.push({ id:'gate', text:GATE_MSG });
+  var chain = Promise.resolve();
+  queue.forEach(function(item){
+    chain = chain.then(function(){ return voiceFetch(item.id, item.text); });
+  });
 }
 
 function stopVoice(){
